@@ -30,7 +30,7 @@ public class Doctor {
      * @param newCol The column the player clicked on.
      */
     public void move(int newRow, int newCol) {
-        if (this.row == this.row +1 || this.row == this.row -1 || this.col == this.col +1 || this.col == this.col -1){
+        if (this.row == newRow && this.col == newCol){
             this.row = newRow;
             this.col = newCol;
         }else{
