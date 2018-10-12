@@ -30,13 +30,38 @@ public class Doctor {
      * @param newCol The column the player clicked on.
      */
     public void move(int newRow, int newCol) {
-        if (this.row == newRow && this.col == newCol){
+        if (this.row == newRow && this.col == newCol) {
             this.row = newRow;
             this.col = newCol;
-        }else{
-            
+        }
+            if(newRow == this.row +1
+                    && newCol == this.col+1
+                    || newCol == this.col -1
+                    || newCol == this.col){
+                this.row = newRow;
+                this.col = newCol;
+            }
+            if(newRow == this.row -1
+                    && newCol == this.col+1
+                    || newCol == this.col -1
+                    || newCol == this.col){
+                this.row = newRow;
+                this.col = newCol;
+            }
+            if(newRow == this.row
+                    && newCol == this.col+1
+                    || newCol == this.col -1
+                    || newCol == this.col){
+                this.row = newRow;
+                this.col = newCol;
+            } else {
+            int randRow = (int) (Math.random() * ((11 - 0) + 0));
+            int randCol = (int) (Math.random() * ((11 - 0) + 0));
+            this.row = randRow;
+            this.col = randCol;
         }
     }
+    
 
     /**
      * Returns the row of this Doctor.

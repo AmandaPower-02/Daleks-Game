@@ -38,6 +38,11 @@ public class CatchGame {
             int col = (int) (Math.random() * ((11 - 0) + 1)) + 0;
             dalek[i] = new Dalek (row, col);
         }
+         //put 3 dalek on the board
+        for (int i = 0; i < 3; i++) {
+            board.putPeg(Color.black ,dalek[i].getRow(), dalek[i].getCol());
+            
+        }
 
 
     }
@@ -50,14 +55,6 @@ public class CatchGame {
         //put the doctor on the board
         board.putPeg(Color.green, doctor.getRow(), doctor.getCol());
         
-        //put 3 dalek on the board
-        for (int i = 0; i < 3; i++) {
-            board.putPeg(Color.black ,dalek[i].getRow(), dalek[i].getCol());
-            
-        }
-
-
-
         while (true) {
             //move the doctor
             //wait for user to click on a spot
@@ -73,6 +70,16 @@ public class CatchGame {
             doctor.move(row, col);
             // place doctor in new spotd
             board.putPeg(Color.green, doctor.getRow(), doctor.getCol());
+            
+//            //move the daleks
+//            for (int i = 0; i < dalek.length ; i++) {
+//                //remove the daleks from place
+//                board.removePeg(dalek[i].getRow(), dalek[i].getCol());
+//                //move the daleks
+//                dalek[i].advanceTowards(doctor);
+//                //place peg in new place
+//                board.putPeg(Color.black, dalek[i].getRow(), dalek[i].getCol());
+//            } 
         }
     }
 }
