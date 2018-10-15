@@ -29,19 +29,29 @@ public class Dalek {
      * @param doc The Doctor to move towards.
      */
     public void advanceTowards(Doctor doctor) {
-       
-        if(doctor.getRow()> this.row && doctor.getCol()== this.col){
-            this.row = this.row +1;
+        //move dalek row
+        if (doctor.getRow()== this.row){
+            this.row = this.row;
         }
-        if(doctor.getRow() < this.row && doctor.getCol()== this.col){
-            this.row = this.row -1;
+        if (doctor.getRow()> this.row){
+            this.row = this.row + 1;
         }
-        if(doctor.getRow() == this.row && doctor.getCol()> this.col){
-            this.col = this.col +1;
+        if (doctor.getRow()< this.row){
+            this.row = this.row - 1;
         }
-        if(doctor.getRow() == this.row && doctor.getCol()< this.col){
-            this.col = this.col -1;
+        
+        //move dalek colum
+        if (doctor.getCol()== this.col){
+            this.col = this.col;
         }
+        if (doctor.getCol()> this.col){
+            this.col = this.col + 1;
+        }
+        if (doctor.getCol()< this.col){
+            this.col = this.col - 1;
+        }
+        
+     
         
     }
 
@@ -66,7 +76,13 @@ public class Dalek {
     /**
      * Sets the Dalek to be in a crashed state.
      */
-    public void crash() {
+    public void crash (Dalek d1) {
+        if(this.row == d1.row && this.col == d1.col){
+            d1.hasCrashed = true;
+            this.hasCrashed = true;
+        }
+        
+        
         
     }
 

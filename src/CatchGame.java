@@ -8,8 +8,8 @@ import java.awt.Color;
  */
 public class CatchGame {
 
-    Doctor doctor;
-    Dalek [] dalek;
+    private Doctor doctor;
+    private Dalek [] dalek;
     /**
      *
      * Instance variables go up here Make sure to create a Board, 3 Daleks, and
@@ -31,7 +31,7 @@ public class CatchGame {
 
 
         //place 3 dalek
-        Dalek [] dalek = new Dalek [3];
+        dalek = new Dalek [3];
         
         for (int i = 0; i < 3; i++) {
             int row = (int) (Math.random() * ((11 - 0) + 1)) + 0;
@@ -71,15 +71,38 @@ public class CatchGame {
             // place doctor in new spotd
             board.putPeg(Color.green, doctor.getRow(), doctor.getCol());
             
-//            //move the daleks
-//            for (int i = 0; i < dalek.length ; i++) {
-//                //remove the daleks from place
-//                board.removePeg(dalek[i].getRow(), dalek[i].getCol());
-//                //move the daleks
-//                dalek[i].advanceTowards(doctor);
-//                //place peg in new place
-//                board.putPeg(Color.black, dalek[i].getRow(), dalek[i].getCol());
-//            } 
+            //move the daleks
+            for (int i = 0; i < dalek.length ; i++) {
+//                remove the daleks from place
+                board.removePeg(dalek[i].getRow(), dalek[i].getCol());
+//                move the daleks
+                dalek[i].advanceTowards(doctor);
+//                place peg in new place
+                board.putPeg(Color.black, dalek[i].getRow(), dalek[i].getCol());
+            } 
+            
+            //the daleks have crashed 
+            dalek [0].crash(dalek [1]);
+            dalek [1].crash(dalek [2]);
+            dalek [2].crash(dalek [0]);
+            
+            for (int i = 0; i <dalek.length; i++) {
+                
+                //the daleks have crashed 
+            dalek [0].crash(dalek [1]);
+            dalek [1].crash(dalek [2]);
+            dalek [2].crash(dalek [0]);
+                
+                if(dalek[i].hasCrashed()){
+                //remove the daleks
+                board.removePeg(dalek[i].getRow(), dalek[i].getCol());
+                //place red dot in their place
+                board.putPeg(Color.red, dalek[i].getRow(), dalek[i].getCol());
+                }
+            }
+                
+            }
         }
-    }
+    
+
 }
