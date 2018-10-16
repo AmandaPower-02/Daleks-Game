@@ -29,6 +29,8 @@ public class Dalek {
      * @param doc The Doctor to move towards.
      */
     public void advanceTowards(Doctor doctor) {
+        if(!hasCrashed){
+            
         //move dalek row
         if (doctor.getRow()== this.row){
             this.row = this.row;
@@ -50,6 +52,8 @@ public class Dalek {
         if (doctor.getCol()< this.col){
             this.col = this.col - 1;
         }
+    }
+        
         
      
         
@@ -81,7 +85,6 @@ public class Dalek {
             d1.hasCrashed = true;
             this.hasCrashed = true;
         }
-        
         
         
     }

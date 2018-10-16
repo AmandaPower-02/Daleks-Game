@@ -9,7 +9,8 @@ import java.awt.Color;
 public class CatchGame {
 
     private Doctor doctor;
-    private Dalek [] dalek;
+    private Dalek[] dalek;
+    public boolean playing = true;
     /**
      *
      * Instance variables go up here Make sure to create a Board, 3 Daleks, and
@@ -25,23 +26,27 @@ public class CatchGame {
         //create a 12 x 12 board
         board = new Board(12, 12);
 
+        //generate row and column where doctor will start
+        int docRow = (int) (Math.random() * ((11 - 0) + 1)) + 0;
+        int docCol = (int) (Math.random() * ((11 - 0) + 1)) + 0;
+
         //place doctor at their origional spot on the board
-        doctor = new Doctor(1, 2);
+        doctor = new Doctor(docRow, docCol);
 
 
 
         //place 3 dalek
-        dalek = new Dalek [3];
-        
+        dalek = new Dalek[3];
+
         for (int i = 0; i < 3; i++) {
             int row = (int) (Math.random() * ((11 - 0) + 1)) + 0;
             int col = (int) (Math.random() * ((11 - 0) + 1)) + 0;
-            dalek[i] = new Dalek (row, col);
+            dalek[i] = new Dalek(row, col);
         }
-         //put 3 dalek on the board
+        //put 3 dalek on the board
         for (int i = 0; i < 3; i++) {
-            board.putPeg(Color.black ,dalek[i].getRow(), dalek[i].getCol());
-            
+            board.putPeg(Color.black, dalek[i].getRow(), dalek[i].getCol());
+
         }
 
 
@@ -55,7 +60,35 @@ public class CatchGame {
         //put the doctor on the board
         board.putPeg(Color.green, doctor.getRow(), doctor.getCol());
         
-        while (true) {
+        //re generate if any daleks are in the same place
+        for (int i = 0; i < dalek.length; i++) {
+            if(dalek[i].hasCrashed()||dalek[i].getRow()== doctor.getRow()&& dalek[i].getCol()==doctor.getCol()){
+             
+                board.removePeg(dalek[i].getRow(), dalek[i].getCol());
+                board.removePeg(doctor.getRow(), doctor.getCol());
+                
+                for (int x = 0; x < 3; x++) {
+            int row = (int) (Math.random() * ((11 - 0) + 1)) + 0;
+            int col = (int) (Math.random() * ((11 - 0) + 1)) + 0;
+            dalek[x] = new Dalek(row, col);
+        }
+        //put 3 dalek on the board
+        for (int j = 0; j < 3; j++) {
+            
+            board.putPeg(Color.black, dalek[j].getRow(), dalek[j].getCol());
+
+        }
+        //generate row and column where doctor will start
+        int docRow = (int) (Math.random() * ((11 - 0) + 1)) + 0;
+        int docCol = (int) (Math.random() * ((11 - 0) + 1)) + 0;
+
+        //place doctor at their origional spot on the board
+        doctor = new Doctor(docRow, docCol);
+            }
+            
+        }
+        
+        while (playing) {
             //move the doctor
             //wait for user to click on a spot
             Coordinate click = board.getClick();
@@ -70,39 +103,63 @@ public class CatchGame {
             doctor.move(row, col);
             // place doctor in new spotd
             board.putPeg(Color.green, doctor.getRow(), doctor.getCol());
-            
+
             //move the daleks
-            for (int i = 0; i < dalek.length ; i++) {
+            for (int i = 0; i < dalek.length; i++) {
 //                remove the daleks from place
                 board.removePeg(dalek[i].getRow(), dalek[i].getCol());
 //                move the daleks
                 dalek[i].advanceTowards(doctor);
 //                place peg in new place
                 board.putPeg(Color.black, dalek[i].getRow(), dalek[i].getCol());
-            } 
-            
+            }
+
             //the daleks have crashed 
-            dalek [0].crash(dalek [1]);
-            dalek [1].crash(dalek [2]);
-            dalek [2].crash(dalek [0]);
-            
-            for (int i = 0; i <dalek.length; i++) {
-                
+            dalek[0].crash(dalek[1]);
+            dalek[1].crash(dalek[2]);
+            dalek[2].crash(dalek[0]);
+
+            for (int i = 0; i < dalek.length; i++) {
+
                 //the daleks have crashed 
-            dalek [0].crash(dalek [1]);
-            dalek [1].crash(dalek [2]);
-            dalek [2].crash(dalek [0]);
-                
-                if(dalek[i].hasCrashed()){
-                //remove the daleks
-                board.removePeg(dalek[i].getRow(), dalek[i].getCol());
-                //place red dot in their place
-                board.putPeg(Color.red, dalek[i].getRow(), dalek[i].getCol());
+                dalek[0].crash(dalek[1]);
+                dalek[1].crash(dalek[2]);
+                dalek[2].crash(dalek[0]);
+
+                if (dalek[i].hasCrashed()) {
+                    //remove the daleks
+                    board.removePeg(dalek[i].getRow(), dalek[i].getCol());
+                    //place red dot in their place
+                    board.putPeg(Color.red, dalek[i].getRow(), dalek[i].getCol());
+                }
+
+                if (dalek[0].hasCrashed() && dalek[1].hasCrashed() && dalek[2].hasCrashed()) {
+                    //remove dalek pegs
+                    board.removePeg(dalek[i].getRow(), dalek[i].getCol());
+                    //place red peg in place
+                    board.putPeg(Color.red, dalek[i].getRow(), dalek[i].getCol());
+                    //tell player they win
+                    board.displayMessage("YOU WIN");
+                    playing = false;
                 }
             }
-                
+
+            //you lose if a dalake catches you
+            for (int i = 0; i < dalek.length; i++) {
+                if (dalek[i].getRow() == doctor.getRow() && dalek[i].getCol() == doctor.getCol()) {
+                    //remove doctor peg
+                    board.removePeg(doctor.getRow(), doctor.getCol());
+                    //remove dalek peg
+                    board.removePeg(dalek[i].getRow(), dalek[i].getCol());
+                    //place yellow peg
+                    board.putPeg(Color.yellow, dalek[i].getRow(), dalek[i].getCol());
+                    //tell player they win
+                    board.displayMessage("YOU LOSE");
+                    //make the game stop
+                    playing = false;
+                }
+
             }
         }
-    
-
+    }
 }
