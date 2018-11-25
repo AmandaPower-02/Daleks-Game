@@ -29,7 +29,10 @@ public class Dalek {
      * @param doc The Doctor to move towards.
      */
     public void advanceTowards(Doctor doctor) {
-        if(!hasCrashed){
+        //leaves the method if the dalek has crashed
+        if(hasCrashed){
+            return;
+        }
             
         //move dalek row
         if (doctor.getRow()== this.row){
@@ -53,11 +56,6 @@ public class Dalek {
             this.col = this.col - 1;
         }
     }
-        
-        
-     
-        
-    }
 
     /**
      * Returns the row of this Dalek.
@@ -80,13 +78,8 @@ public class Dalek {
     /**
      * Sets the Dalek to be in a crashed state.
      */
-    public void crash (Dalek d1) {
-        if(this.row == d1.row && this.col == d1.col){
-            d1.hasCrashed = true;
-            this.hasCrashed = true;
-        }
-        
-        
+    public void crash () {
+        this.hasCrashed=  true;
     }
 
     /**

@@ -1,4 +1,7 @@
 
+import java.util.Random;
+
+
 /**
  * This class models the Doctor in the game. A Doctor has a position and can
  * move to a new position.
@@ -6,6 +9,7 @@
 public class Doctor {
 
     private int row, col;
+    Random rand = new Random();
 
     /**
      * Initializes the variables for a Doctor.
@@ -30,36 +34,45 @@ public class Doctor {
      * @param newCol The column the player clicked on.
      */
     public void move(int newRow, int newCol) {
-        if (this.row == newRow && this.col == newCol) {
+        if (Math.abs(this.row - newRow) > 1 || Math.abs(this.col - newCol) > 1){
+            this.row = rand.nextInt(11);
+            this.col = rand.nextInt(11);
+        }else{
             this.row = newRow;
             this.col = newCol;
         }
-            if(newRow == this.row +1
-                    && newCol == this.col+1
-                    || newCol == this.col -1
-                    || newCol == this.col){
-                this.row = newRow;
-                this.col = newCol;
-            }
-            if(newRow == this.row -1
-                    && newCol == this.col+1
-                    || newCol == this.col -1
-                    || newCol == this.col){
-                this.row = newRow;
-                this.col = newCol;
-            }
-            if(newRow == this.row
-                    && newCol == this.col+1
-                    || newCol == this.col -1
-                    || newCol == this.col){
-                this.row = newRow;
-                this.col = newCol;
-            } else {
-            int randRow = (int) (Math.random() * ((11 - 0) + 0));
-            int randCol = (int) (Math.random() * ((11 - 0) + 0));
-            this.row = randRow;
-            this.col = randCol;
-        }
+        
+        
+//        if (this.row == newRow && this.col == newCol) {
+//            this.row = newRow;
+//            this.col = newCol;
+//        }
+//            if(newRow == this.row +1
+//                    && newCol == this.col+1
+//                    || newCol == this.col -1
+//                    || newCol == this.col){
+//                this.row = newRow;
+//                this.col = newCol;
+//            }
+//            if(newRow == this.row -1
+//                    && newCol == this.col+1
+//                    || newCol == this.col -1
+//                    || newCol == this.col){
+//                this.row = newRow;
+//                this.col = newCol;
+//            }
+//            if(newRow == this.row
+//                    && newCol == this.col+1
+//                    || newCol == this.col -1
+//                    || newCol == this.col){
+//                this.row = newRow;
+//                this.col = newCol;
+//            } else {
+//            int randRow = (int) (Math.random() * ((11 - 0) + 0));
+//            int randCol = (int) (Math.random() * ((11 - 0) + 0));
+//            this.row = randRow;
+//            this.col = randCol;
+//        }
     }
     
 
